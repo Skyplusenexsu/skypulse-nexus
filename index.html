@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyPulse Nexus | 城市低空经济数字孪生指挥系统</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <p class="eyebrow">URBAN AERIAL COMMAND OS</p>
+        <h1>SkyPulse<br>Nexus</h1>
+        <p class="brand-desc">城市低空经济数字孪生指挥系统</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#hero">总览指挥台</a>
+        <a href="#airspace">空域网络</a>
+        <a href="#analytics">智能分析</a>
+        <a href="#operations">运行管理</a>
+        <a href="#architecture">系统架构</a>
+      </nav>
+
+      <div class="sidebar-card compact">
+        <p class="card-kicker">System Domain</p>
+        <strong>低空物流 / 空域治理 / 风险控制</strong>
+      </div>
+
+      <div id="sidebarStats" class="sidebar-card stat-stack"></div>
+    </aside>
+
+    <main class="content">
+      <section id="hero" class="screen hero-screen">
+        <div class="section-intro narrow">
+          <p class="eyebrow">Low-Altitude Economy Digital Twin</p>
+          <h2>城市低空经济数字孪生指挥系统</h2>
+          <p class="lead">
+            以飞行任务、天气扰动、空域密度、运力负载与异常事件为核心输入，
+            构建面向未来城市低空网络的实时态势感知、风险诊断与协同调度界面。
+          </p>
+        </div>
+
+        <div class="hero-grid v2">
+          <article class="glass-panel overview-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Global Orbital Twin</p>
+                <h3>全局运行轨道图</h3>
+              </div>
+              <span id="timestampLabel" class="chip">同步中</span>
+            </div>
+            <div id="orbitalView" class="orbital-view"></div>
+            <div id="flowTicker" class="flow-ticker"></div>
+          </article>
+
+          <article class="glass-panel command-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Command Snapshot</p>
+                <h3>核心指标与仪表</h3>
+              </div>
+            </div>
+            <div id="heroMetrics" class="metric-grid"></div>
+            <div id="gaugeCluster" class="gauge-cluster"></div>
+          </article>
+        </div>
+
+        <div class="hero-lower-grid">
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Demand Matrix</p>
+                <h3>城区需求热力矩阵</h3>
+              </div>
+            </div>
+            <div id="demandMatrix" class="demand-matrix"></div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Capability Radar</p>
+                <h3>系统能力雷达</h3>
+              </div>
+            </div>
+            <div id="radarView" class="radar-view"></div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Signal Layer</p>
+                <h3>信号脉冲带</h3>
+              </div>
+            </div>
+            <div id="pulseGrid" class="pulse-grid"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="airspace" class="screen">
+        <div class="section-intro">
+          <p class="eyebrow">Digital Twin Airspace</p>
+          <h2>城市空域网络与动态推演</h2>
+          <p class="lead">
+            将城区节点、关键通道、风险等级和场景参数统一到一个可交互的空域视图，
+            用于识别拥堵点、观察风险外溢并快速调整运力策略。
+          </p>
+        </div>
+
+        <div class="airspace-layout">
+          <article class="glass-panel map-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Twin Air Network</p>
+                <h3>城市级空域网络图</h3>
+              </div>
+              <span class="chip chip-soft">12 节点 / 8 主通道 / 多级风险</span>
+            </div>
+            <div id="airspaceMap" class="airspace-map"></div>
+          </article>
+
+          <aside class="side-stack">
+            <article class="glass-panel control-panel">
+              <div class="panel-title-row">
+                <div>
+                  <p class="mini-label">Scenario Engine</p>
+                  <h3>实时推演控制台</h3>
+                </div>
+              </div>
+              <div id="scenarioChips" class="scenario-chips"></div>
+
+              <div class="slider-card">
+                <label for="networkLoad">网络负载系数</label>
+                <input id="networkLoad" type="range" min="70" max="145" step="1" value="100">
+                <div class="slider-meta">
+                  <span>保守</span>
+                  <strong id="networkLoadLabel">100%</strong>
+                  <span>极限</span>
+                </div>
+              </div>
+
+              <div class="slider-card">
+                <label for="weatherShock">天气扰动强度</label>
+                <input id="weatherShock" type="range" min="0" max="100" step="1" value="36">
+                <div class="slider-meta">
+                  <span>平稳</span>
+                  <strong id="weatherShockLabel">36</strong>
+                  <span>剧烈</span>
+                </div>
+              </div>
+
+              <div class="control-actions">
+                <button id="saveConfigBtn" class="action-btn primary">保存当前配置</button>
+                <button id="exportReportBtn" class="action-btn">导出运行报告</button>
+              </div>
+
+              <div class="insight-card">
+                <p class="mini-label">Dynamic Strategy</p>
+                <div id="aiSuggestion" class="insight-text"></div>
+              </div>
+            </article>
+
+            <article class="glass-panel">
+              <div class="panel-title-row">
+                <div>
+                  <p class="mini-label">Alert Stream</p>
+                  <h3>动态事件流</h3>
+                </div>
+              </div>
+              <div id="eventFeed" class="event-feed"></div>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section id="analytics" class="screen">
+        <div class="section-intro">
+          <p class="eyebrow">Operational Intelligence</p>
+          <h2>运营智能分析中枢</h2>
+          <p class="lead">
+            统一呈现任务节律、风险脉冲、预测矩阵、关键通道画像和分区运营状态，
+            让高频决策建立在连续变化的数据之上。
+          </p>
+        </div>
+
+        <div class="analytics-grid analytics-v2">
+          <article class="glass-panel chart-panel wide">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Traffic Rhythm</p>
+                <h3>24 小时飞行任务波动</h3>
+              </div>
+              <span id="peakHourLabel" class="chip"></span>
+            </div>
+            <div id="trafficBars" class="bar-chart"></div>
+          </article>
+
+          <article class="glass-panel chart-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Risk Evolution</p>
+                <h3>风险脉冲趋势</h3>
+              </div>
+              <span id="riskAverageLabel" class="chip chip-warn"></span>
+            </div>
+            <div id="riskLine" class="line-chart"></div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Pressure Heatmap</p>
+                <h3>时段压力热区</h3>
+              </div>
+            </div>
+            <div id="pressureHeatmap" class="pressure-heatmap"></div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Prediction Matrix</p>
+                <h3>未来 2 小时预测</h3>
+              </div>
+            </div>
+            <div id="predictionCards" class="prediction-grid"></div>
+          </article>
+
+          <article class="glass-panel ranking-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Critical Corridors</p>
+                <h3>关键通道排行</h3>
+              </div>
+            </div>
+            <div id="corridorRanking" class="ranking-list"></div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Fleet Pulse</p>
+                <h3>运力脉冲簇</h3>
+              </div>
+            </div>
+            <div id="fleetPulse" class="fleet-pulse"></div>
+          </article>
+        </div>
+
+        <article class="glass-panel district-panel">
+          <div class="panel-title-row">
+            <div>
+              <p class="mini-label">District Portrait</p>
+              <h3>城区运营画像</h3>
+            </div>
+          </div>
+          <div id="districtCards" class="district-grid"></div>
+        </article>
+      </section>
+
+      <section id="operations" class="screen">
+        <div class="section-intro">
+          <p class="eyebrow">Operations Center</p>
+          <h2>运行管理与数据服务</h2>
+          <p class="lead">
+            面向实用性设计的基础业务模块，包含任务数据浏览、异常告警录入、当前配置持久化和报告导出，
+            让系统从可视化原型升级为可操作应用。
+          </p>
+        </div>
+
+        <div class="operations-grid">
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">System Summary</p>
+                <h3>运行总况</h3>
+              </div>
+            </div>
+            <div id="systemSummaryCards" class="summary-grid"></div>
+            <div id="latestConfigCard" class="latest-config-card"></div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Alert Input</p>
+                <h3>新增告警</h3>
+              </div>
+            </div>
+            <form id="alertForm" class="form-grid">
+              <label>
+                <span>城区</span>
+                <select id="alertDistrict"></select>
+              </label>
+              <label>
+                <span>级别</span>
+                <select id="alertSeverity">
+                  <option value="high">高</option>
+                  <option value="mid">中</option>
+                  <option value="low">低</option>
+                </select>
+              </label>
+              <label class="wide">
+                <span>标题</span>
+                <input id="alertTitle" type="text" placeholder="输入告警标题">
+              </label>
+              <label class="wide">
+                <span>详情</span>
+                <textarea id="alertDetail" rows="4" placeholder="输入告警详情"></textarea>
+              </label>
+              <button class="action-btn primary wide" type="submit">提交告警</button>
+            </form>
+          </article>
+        </div>
+
+        <div class="operations-grid lower">
+          <article class="glass-panel wide-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Task Records</p>
+                <h3>任务记录</h3>
+              </div>
+              <div class="table-actions">
+                <select id="taskDistrictFilter"></select>
+                <button id="refreshTasksBtn" class="action-btn">刷新</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>任务号</th>
+                    <th>时间</th>
+                    <th>城区</th>
+                    <th>通道</th>
+                    <th>优先级</th>
+                    <th>状态</th>
+                    <th>ETA</th>
+                    <th>风险</th>
+                    <th>载荷</th>
+                    <th>任务量</th>
+                  </tr>
+                </thead>
+                <tbody id="taskTableBody"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Alert Records</p>
+                <h3>告警记录</h3>
+              </div>
+            </div>
+            <div id="alertRecordList" class="alert-record-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="architecture" class="screen">
+        <div class="section-intro">
+          <p class="eyebrow">System Structure</p>
+          <h2>架构分层与数据编排</h2>
+          <p class="lead">
+            从数据生成、分析引擎、策略服务到可视指挥台，展示系统在结构组织和数据编排上的完整性。
+          </p>
+        </div>
+
+        <div class="architecture-grid">
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">System Architecture</p>
+                <h3>四层技术架构</h3>
+              </div>
+            </div>
+            <div id="architectureLayers" class="layer-stack"></div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Data Workflow</p>
+                <h3>数据流编排</h3>
+              </div>
+            </div>
+            <div id="workflowSteps" class="workflow-steps"></div>
+          </article>
+        </div>
+
+        <div class="architecture-grid lower-grid">
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Technology Stack</p>
+                <h3>技术栈矩阵</h3>
+              </div>
+            </div>
+            <div id="stackCards" class="stack-grid"></div>
+          </article>
+
+          <article class="glass-panel">
+            <div class="panel-title-row">
+              <div>
+                <p class="mini-label">Execution Path</p>
+                <h3>联动执行路径</h3>
+              </div>
+            </div>
+            <div id="useCaseTimeline" class="timeline"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
